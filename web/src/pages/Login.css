@@ -31,7 +31,6 @@
 }
 
 .login-card h1 span {
-    /* Changed from Green to Electric Blue */
     color: #3b82f6; 
 }
 
@@ -59,19 +58,16 @@
 
 .input-group input:focus {
     outline: none;
-    /* Focus border changed to Blue */
     border-color: #3b82f6;
     background: rgba(0, 0, 0, 0.6);
-    /* Blue glow effect */
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); 
 }
 
 .login-btn {
     width: 100%;
     padding: 14px;
-    /* Button background changed to Blue */
     background: #3b82f6;
-    color: #ffffff; /* Changed to white for better contrast on blue */
+    color: #ffffff;
     border: none;
     border-radius: 8px;
     font-weight: bold;
@@ -82,7 +78,6 @@
 }
 
 .login-btn:hover {
-    /* Darker blue on hover */
     background: #2563eb;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
@@ -93,8 +88,67 @@
 }
 
 .login-btn:disabled {
-    /* Muted blue for disabled state */
     background: #1e3a8a;
     cursor: not-allowed;
     opacity: 0.7;
+}
+
+/* --- NEW ADDITIONS FOR GOOGLE LOGIN --- */
+
+.divider {
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Creating the horizontal lines for the divider */
+.divider::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+/* The "OR" text sitting in the middle of the line */
+.divider span {
+    background: #1a1a1a; /* Dark background to cover the line */
+    padding: 0 10px;
+    position: relative;
+    z-index: 2;
+    color: #666;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.google-btn {
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #ffffff;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.google-btn:hover {
+    background: #e5e5e5;
+    transform: translateY(-1px);
+}
+
+/* Fixes the giant icon size */
+.google-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
