@@ -8,11 +8,28 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    // NEW: Handle Google OAuth Login
+    const handleGoogleLogin = async () => {
+        setLoading(true);
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                // Redirects user to the dashboard after successful Google authentication
+                redirectTo: window.location.origin + '/dashboard' 
+            }
+        });
+
+        if (error) {
+            alert(error.message);
+            setLoading(false);
+        }
+    };
+
+    // ORIGINAL: Handle Email/Password Login (No changes to your logic)
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        // Using Supabase Auth SDK instead of Backend API
         const { data, error } = await supabase.auth.signInWithPassword({
             email: credentials.email,
             password: credentials.password,
@@ -21,10 +38,8 @@ const Login = () => {
         if (error) {
             alert(error.message);
         } else {
-            // Added success alert here
             alert("Login Successful!");
-            
-            // Save only the email to local storage as per your original logic
+            // Storing the user email in local storage as per your original requirement
             localStorage.setItem("user", data.user.email);
             navigate("/dashboard");
         }
@@ -37,6 +52,7 @@ const Login = () => {
                 <h1><span>Quick</span>Contacts</h1>
                 <p>Please sign in to continue</p>
                 
+                {/* Traditional Login Form */}
                 <form onSubmit={handleLogin}>
                     <div className="input-group">
                         <input 
@@ -60,6 +76,20 @@ const Login = () => {
                         {loading ? 'Authenticating...' : 'Login'}
                     </button>
                 </form>
+
+                {/* Visual Divider */}
+                <div className="divider"><span>OR</span></div>
+
+                {/* NEW: Google Sign-In Button */}
+                <button 
+                    onClick={handleGoogleLogin} 
+                    className="google-btn" 
+                    type="button"
+                    disabled={loading}
+                >
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="google" />
+                    Sign in with Google
+                </button>
             </div>
         </div>
     );
