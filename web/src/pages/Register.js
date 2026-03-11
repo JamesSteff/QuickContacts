@@ -12,11 +12,15 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    // Using Supabase Auth SDK to create a new user account
     const { error } = await supabase.auth.signUp({ email, password });
 
-    if (error) alert(error.message);
-    else {
-      alert("Registration successful! Please check your email for verification.");
+    if (error) {
+      alert(error.message);
+    } else {
+      alert("Registration successful!");
+      // Redirect to login page after successful signup
       navigate("/login");
     }
     setLoading(false);
@@ -25,19 +29,41 @@ const Register = () => {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-        <h1><span>Quick</span>Register</h1>
+        {/* Branding with Blue accent color */}
+        <h1><span style={{ color: '#3b82f6' }}>Quick</span>Register</h1>
+        
         <form onSubmit={handleRegister}>
           <div className="input-group">
-            <input type="email" placeholder="Email" onChange={e => setEmail(e.target.value)} required />
+            <input 
+              type="email" 
+              placeholder="Email" 
+              onChange={e => setEmail(e.target.value)} 
+              required 
+            />
           </div>
           <div className="input-group">
-            <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} required />
+            <input 
+              type="password" 
+              placeholder="Password" 
+              onChange={e => setPassword(e.target.value)} 
+              required 
+            />
           </div>
-          <button className="btn-primary" disabled={loading}>
+
+          {/* Registration button with Blue background */}
+          <button 
+            className="btn-primary" 
+            disabled={loading} 
+            style={{ backgroundColor: '#3b82f6', border: 'none' }}
+          >
             {loading ? 'Creating Account...' : 'Sign Up'}
           </button>
         </form>
-        <p className="link-text">Already have an account? <Link to="/login">Login</Link></p>
+
+        {/* Navigation link back to Login */}
+        <p className="link-text">
+          Already have an account? <Link to="/login" style={{ color: '#3b82f6' }}>Login</Link>
+        </p>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../utils/supabaseClient'; // Path to your client
-import './Login.css'; // Link your final CSS
+import { supabase } from '../utils/supabaseClient'; 
+import './Login.css'; 
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
 
-        // Using Supabase Auth instead of Axios
+        // Using Supabase Auth SDK instead of Backend API
         const { data, error } = await supabase.auth.signInWithPassword({
             email: credentials.email,
             password: credentials.password,
@@ -21,6 +21,10 @@ const Login = () => {
         if (error) {
             alert(error.message);
         } else {
+            // Added success alert here
+            alert("Login Successful!");
+            
+            // Save only the email to local storage as per your original logic
             localStorage.setItem("user", data.user.email);
             navigate("/dashboard");
         }
@@ -31,7 +35,7 @@ const Login = () => {
         <div className="login-container">
             <div className="login-card">
                 <h1><span>Quick</span>Contacts</h1>
-                <p>Welcome back, James!</p>
+                <p>Please sign in to continue</p>
                 
                 <form onSubmit={handleLogin}>
                     <div className="input-group">

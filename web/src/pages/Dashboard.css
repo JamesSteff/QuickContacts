@@ -3,6 +3,8 @@
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  min-height: 100vh;
+  color: #e0e0e0;
 }
 
 .nav-bar {
@@ -14,7 +16,37 @@
   margin-bottom: 2rem;
 }
 
-.nav-bar h2 span { color: #3ecf8e; }
+.nav-bar h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.nav-bar h2 span { 
+  /* Updated to Electric Blue */
+  color: #3b82f6; 
+}
+
+/* Container for the user welcome message */
+.welcome-section {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  /* Updated gradient and border to match blue theme */
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), transparent);
+  border-radius: 12px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.welcome-section h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.8rem;
+}
+
+.welcome-section p {
+  color: #888;
+  margin: 5px 0 0 0;
+}
 
 .content-grid {
   display: grid;
@@ -22,24 +54,58 @@
   gap: 1.5rem;
 }
 
+/* Individual Contact Card Styling */
 .contact-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.03);
   padding: 1.5rem;
   border-radius: 12px;
-  border-left: 4px solid #3ecf8e;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  /* Side border updated to Blue */
+  border-left: 4px solid #3b82f6;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
+.contact-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.07);
+  /* Added a subtle blue glow on hover */
+  box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
+}
+
+.contact-card h4 {
+  margin: 0 0 10px 0;
+  color: #fff;
+}
+
+.contact-card p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* Logout Button - Keeps Red for contrast (standard for delete/exit actions) */
 .logout-btn {
   background: transparent;
-  border: 1px solid #ff4d4d;
-  color: #ff4d4d;
-  padding: 8px 16px;
-  border-radius: 6px;
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .logout-btn:hover {
-  background: #ff4d4d;
+  background: #3b82f6;
   color: white;
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.3);
+}
+
+/* Responsive adjustment for mobile */
+@media (max-width: 600px) {
+  .nav-bar {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
 }
