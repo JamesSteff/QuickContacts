@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../utils/supabaseClient'; 
 import './Login.css'; 
 
@@ -8,13 +8,11 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // NEW: Handle Google OAuth Login
     const handleGoogleLogin = async () => {
         setLoading(true);
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                // Redirects user to the dashboard after successful Google authentication
                 redirectTo: window.location.origin + '/dashboard' 
             }
         });
@@ -25,7 +23,6 @@ const Login = () => {
         }
     };
 
-    // ORIGINAL: Handle Email/Password Login (No changes to your logic)
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -39,7 +36,6 @@ const Login = () => {
             alert(error.message);
         } else {
             alert("Login Successful!");
-            // Storing the user email in local storage as per your original requirement
             localStorage.setItem("user", data.user.email);
             navigate("/dashboard");
         }
@@ -49,10 +45,10 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-card">
+                {/* Updated Branding & Subtitle */}
                 <h1><span>Quick</span>Contacts</h1>
-                <p>Please sign in to continue</p>
+                <p className="subtitle">Welcome back!</p>
                 
-                {/* Traditional Login Form */}
                 <form onSubmit={handleLogin}>
                     <div className="input-group">
                         <input 
@@ -73,14 +69,12 @@ const Login = () => {
                     </div>
                     
                     <button type="submit" className="login-btn" disabled={loading}>
-                        {loading ? 'Authenticating...' : 'Login'}
+                        {loading ? 'AUTHENTICATING...' : 'LOGIN'}
                     </button>
                 </form>
 
-                {/* Visual Divider */}
                 <div className="divider"><span>OR</span></div>
 
-                {/* NEW: Google Sign-In Button */}
                 <button 
                     onClick={handleGoogleLogin} 
                     className="google-btn" 
@@ -90,6 +84,10 @@ const Login = () => {
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="google" />
                     Sign in with Google
                 </button>
+
+                <div className="login-footer">
+                    <p>Don't have an account? <Link to="/register" className="register-link">Register</Link></p>
+                </div>
             </div>
         </div>
     );
