@@ -39,7 +39,7 @@ const Home = () => {
 
         {/* Minimalist Tech Stack Footer */}
         <div style={{ marginTop: '40px', fontSize: '0.7rem', color: '#444', letterSpacing: '2px' }}>
-          REACT • SPRING BOOT • GOOGLE API
+          Full-Stack Contact Management
         </div>
 
       </div>
