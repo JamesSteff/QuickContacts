@@ -4,7 +4,7 @@
 **QuickContacts** is a simple app for storing and managing personal contact information. It provides a straightforward platform for users to keep track of their contacts, categorize them into groups, and access them easily through a secure web interface.
 
 ## 🛠 Tech Stack
-* **Frontend:** React.js
+* **Frontend:** React.js (Create React App)
 * **Backend:** Spring Boot 3.5.1 (Java 21)
 * **Database:** Supabase (PostgreSQL)
 * **Security:** Spring Security with OAuth2 Support
@@ -15,6 +15,7 @@
 * **Group Management:** Organize personal contacts into custom categories or groups.
 * **Cloud Persistence:** Powered by Supabase for reliable, 24/7 accessible storage.
 * **Favorites System:** Mark important contacts for quick access.
+* **Search Functionality:** Quickly find specific contacts in your list.
 * **Secure Login:** Protected by Spring Security authentication.
 
 ---
@@ -22,8 +23,9 @@
 ## 🚀 Setup & Installation
 
 ### 1. Database Configuration (Supabase)
-1. Log in to your **Supabase** dashboard and create a new project.
-2. Get your connection string and update `src/main/resources/application.properties`:
+1. Log in to your Supabase dashboard and create a new project.
+2. Retrieve your connection string from the Project Settings.
+3. Update `src/main/resources/application.properties` with your credentials:
 
 spring.datasource.url=jdbc:postgresql://db.[YOUR_PROJECT_ID].supabase.co:5432/postgres
 spring.datasource.username=postgres
@@ -48,8 +50,8 @@ spring.jpa.hibernate.ddl-auto=update
 ---
 
 ## 🛠 Troubleshooting
-* **Database Errors:** Double-check your database password in `application.properties`.
-* **Java Version:** Ensure you are using **JDK 21** as seen in your `pom.xml`.
-* **Port Conflict:** Default ports are 8080 (Backend) and 3000 (Frontend).
+* **Database Errors:** Ensure your Supabase password is correct and your IP is allowed in Supabase network settings.
+* **Java Version:** Verify that you are using JDK 21 as specified in the pom.xml.
+* **Port Conflict:** Ensure port 8080 (Backend) and 3000 (Frontend) are available.
 
 ---
