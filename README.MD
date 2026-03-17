@@ -25,27 +25,36 @@
 ### 1. Database Configuration (Supabase)
 1. Log in to your **Supabase** dashboard.
 2. Update `src/main/resources/application.properties` with your credentials:
-
+   ``` bash
    spring.datasource.url=jdbc:postgresql://db.[YOUR_PROJECT_ID].supabase.co:5432/postgres
    spring.datasource.username=postgres
    spring.datasource.password=[YOUR_DATABASE_PASSWORD]
    spring.jpa.hibernate.ddl-auto=update
+   ```
 
 ### 2. Backend Setup (Spring Boot)
 1. Navigate to the `backend` folder.
 2. **Build the project:**
-   `mvnw.cmd clean install`
+   ``` bash
+   mvnw.cmd clean install
+   ```
 3. **Run the application:**
-   `mvnw.cmd spring-boot:run`
+   ``` bash
+   mvnw.cmd spring-boot:run
+   ```
 
 ### 3. Frontend Setup (React)
 1. Navigate to the `frontend` folder.
 2. **Environment Variables:** Create a `.env` file in the root directory:
+   ``` bash
    REACT_APP_SUPABASE_URL=https://[YOUR_PROJECT_ID].supabase.co
    REACT_APP_SUPABASE_ANON_KEY=[YOUR_ANON_KEY]
+   ```
 3. **Install & Start:**
-   `npm install`
-   `npm start`
+   ``` bash
+   npm install
+   npm start
+   ```
 
 ---
 
