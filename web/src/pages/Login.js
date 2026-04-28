@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../utils/supabaseClient'; 
 import './Login.css'; 
+import logo from '../assets/logo.png';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -45,6 +46,14 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-card">
+                
+                <div style={{ marginBottom: '-5px', marginTop: '-35px', display: 'flex', justifyContent: 'center' }}>
+                          <img 
+                            src={logo} 
+                            alt="QuickContacts Logo" 
+                            style={{ width: '200px', height: 'auto' }} 
+                          />
+                        </div>
                 {/* Updated Branding & Subtitle */}
                 <h1><span>Quick</span>Contacts</h1>
                 <p className="subtitle">Welcome back!</p>

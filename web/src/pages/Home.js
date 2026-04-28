@@ -1,11 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import logo from '../assets/logo.png';
 
 const Home = () => {
   return (
     <div className="auth-wrapper">
       <div className="auth-card" style={{ maxWidth: '450px', padding: '3.5rem 2rem' }}>
+
+        <div style={{ marginBottom: '-40px', marginTop: '-40px', display: 'flex', justifyContent: 'center' }}>
+  <img 
+    src={logo} 
+    alt="QuickContacts Logo" 
+    style={{ width: '300px', height: 'auto' }} 
+  />
+</div>
         
         {/* Project Title with Blue Accent */}
         <h1 style={{ fontSize: '3rem', fontWeight: '800', marginBottom: '10px' }}>

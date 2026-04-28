@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../utils/supabaseClient';
 import './Dashboard.css'; 
 import '../App.css';
+import logo from '../assets/logo.png';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);

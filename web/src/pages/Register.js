@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../utils/supabaseClient';
 import '../App.css';
 import './Login.css'; 
+import logo from '../assets/logo.png';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -43,6 +44,14 @@ const Register = () => {
   return (
     <div className="login-container">
       <div className="login-card">
+
+        <div style={{ marginBottom: '-5px', marginTop: '-35px', display: 'flex', justifyContent: 'center' }}>
+          <img 
+            src={logo} 
+            alt="QuickContacts Logo" 
+            style={{ width: '200px', height: 'auto' }} 
+          />
+        </div>
         {/* Consistent Branding & Subtitle */}
         <h1>
             <span style={{ color: '#3b82f6' }}>Quick</span>Contacts
