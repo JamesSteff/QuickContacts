@@ -4,6 +4,7 @@ import { supabase } from '../utils/supabaseClient';
 import './Dashboard.css'; 
 import '../App.css';
 import logo from '../assets/logo.png';
+import axios from 'axios'; 
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -43,12 +44,30 @@ const Dashboard = () => {
   };
 
   const fetchContacts = async (userId) => {
-    const { data, error } = await supabase
-      .from('contacts')
-      .select('*')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false });
-    if (!error) setContacts(data);
+    try {
+      const response = await axios.get('http://localhost:8080/api/contacts', {
+        withCredentials: true
+      });
+      setContacts(response.data);
+    } catch (error) {
+      console.error("Backend fetch failed, falling back to Supabase:", error);
+      const { data, error: sbError } = await supabase
+        .from('contacts')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+      if (!sbError) setContacts(data);
+    }
+  };
+
+  const handleSyncGoogleContacts = async () => {
+    setLoading(true);
+    try {
+      window.location.href = "http://localhost:8080/api/contacts/sync";
+    } catch (error) {
+      showToast("Sync failed: " + error.message, 'error');
+      setLoading(false);
+    }
   };
 
   const fetchGroups = async (userId) => {
@@ -87,9 +106,7 @@ const Dashboard = () => {
 
   const handleDeleteContact = async (id) => {
     if (!window.confirm("Delete this contact?")) return;
-    
     const { error } = await supabase.from('contacts').delete().eq('id', id);
-    
     if (error) {
       showToast(error.message, 'error');
     } else {
@@ -171,6 +188,9 @@ const Dashboard = () => {
           <ul>
             <li className={activeFilter === 'all' ? 'active' : ''} onClick={() => setActiveFilter('all')}>All Contacts</li>
             <li className={activeFilter === 'favorites' ? 'active' : ''} onClick={() => setActiveFilter('favorites')}>Favorites</li>
+            <li className="sync-btn-sidebar" onClick={handleSyncGoogleContacts} style={{color: '#ea4335', fontWeight: 'bold', cursor: 'pointer'}}>
+              🔄 Sync Google Contacts
+            </li>
             <li className="sidebar-label">Groups</li>
             {groups.map(g => (
               <li key={g.id} className={activeFilter === g.id ? 'active group-item' : 'group-item'} onClick={() => setActiveFilter(g.id)}>
@@ -182,7 +202,7 @@ const Dashboard = () => {
           </ul>
         </nav>
         <div className="sidebar-footer">
-           <button onClick={() => { supabase.auth.signOut(); navigate("/login"); }} className="logout-btn">Logout</button>
+            <button onClick={() => { supabase.auth.signOut(); navigate("/login"); }} className="logout-btn">Logout</button>
         </div>
       </aside>
 
@@ -197,15 +217,22 @@ const Dashboard = () => {
             <h2 style={{fontSize: '1.8rem', fontWeight: 'bold'}}>
               {activeFilter === 'all' ? 'Your Contacts' : activeFilter === 'favorites' ? 'Favorites' : (groups.find(g => g.id === activeFilter)?.name || 'Group View')}
             </h2>
-            <button className="add-btn" onClick={() => setIsModalOpen(true)}>+ New Contact</button>
+            <div style={{display: 'flex', gap: '10px'}}>
+               <button className="sync-btn" onClick={handleSyncGoogleContacts}>Sync Google</button>
+               <button className="add-btn" onClick={() => setIsModalOpen(true)}>+ New Contact</button>
+            </div>
           </header>
 
           <div className="content-grid">
-            {loading ? <p>Loading...</p> : filteredContacts.map((contact) => (
+            {loading ? <p>Loading contacts...</p> : filteredContacts.map((contact) => (
               <div className={`contact-card ${contact.is_favorite ? 'favorite' : ''}`} key={contact.id}>
                 <div className="card-header">
                   <div className="name-with-fav">
-                    <img src={contact.avatar_url || 'https://via.placeholder.com/40'} alt="avatar" className="contact-img" />
+                    <img 
+                      src={contact.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(contact.full_name || contact.email || 'User')}&background=000000&color=fff`} 
+                      alt="" 
+                      className="contact-img" 
+                    />
                     <span onClick={() => toggleFavorite(contact.id, contact.is_favorite)} className="star-btn" style={{cursor: 'pointer', color: '#facc15'}}>{contact.is_favorite ? '★' : '☆'}</span>
                     <h4 style={{margin: 0}}>{contact.full_name}</h4>
                   </div>
@@ -218,6 +245,7 @@ const Dashboard = () => {
                 <p className="card-sub">{contact.phone_number || 'No phone'}</p>
               </div>
             ))}
+            {!loading && filteredContacts.length === 0 && <p>No contacts found. Try syncing with Google!</p>}
           </div>
         </main>
       </div>
